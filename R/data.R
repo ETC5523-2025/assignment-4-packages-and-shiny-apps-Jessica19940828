@@ -1,0 +1,14 @@
+#' Australia Bushfire Weather Indices (1979-2019)
+#'
+#' A dataset containing the Fire Weather Index (FWI) and Monthly Severity
+#' Rating (MSR) for Southeastern Australia from 1979 to 2019.
+#' This data is from the ERA5 reanalysis, as presented in Figure 3 of van Oldenborgh et al. (2021)
+#'
+#' @format A data frame with 41 observations and 3 variables:
+#' \describe{
+#'   \item{year}{The observation year (1979-2019)}
+#'   \item{fwi_sm}{The highest 7-day mean FWI (FWI7x-SM) during the fire season (Sep-Feb)}
+#'   \item{msr_sm}{The maximum Monthly Severity Rating (MSR-SM) during the fire season (Sep-Feb)}
+#' }
+#' @source \url{https://climexp.knmi.nl/bushfires_timeseries.cgi}
+"ausbushfire_data"
