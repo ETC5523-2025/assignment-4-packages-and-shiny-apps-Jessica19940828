@@ -4,7 +4,7 @@ library(dplyr)
 library(usethis)
 library(here)
 
-# 讀取原始資料
+# Read in raw data
 fwi_data <- readr::read_table(
   here::here("data-raw", "fwi_data.txt"),
   col_names = c("year", "fwi_sm")
@@ -15,12 +15,12 @@ msr_data <- readr::read_table(
   col_names = c("year", "msr_sm")
 )
 
-# 合併資料
+# Combine datasets
 ausbushfire_data_raw <- dplyr::full_join(fwi_data, msr_data, by = "year")
 
 # Filter our year 1978
 ausbushfire_data <- ausbushfire_data_raw %>%
   dplyr::filter(year >= 1979)
 
-# 儲存清理後的資料到 'data/' 資料夾
+# Save clean data into 'data/' folder
 usethis::use_data(ausbushfire_data, overwrite = TRUE)

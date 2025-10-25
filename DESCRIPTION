@@ -2,19 +2,24 @@ Package: ausbushfire
 Title: Bushfire Explorer: Interactive Analysis of Australian Wildfires
 Version: 0.0.0.9000
 Authors@R: 
-    person("HengHsieh", "Chang", email = "jessica830828@gmail.com", role = c("aut", "cre"))
+    person(
+    "HengHsieh", "Chang", 
+    email = "jessica830828@gmail.com", 
+    role = c("aut", "cre"))
 Description: Provides an interactive Shiny application and supporting functions 
     to explore, visualize, and analyze Australian bushfire data. 
     The package includes cleaned datasets, reproducible scripts, and 
     a pkgdown-generated documentation website for educational purposes.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Depends: R (>= 4.2)
+Depends: R (>= 3.5)
 Imports: 
     shiny,
     ggplot2,
     dplyr,
+    bslib,
     tidyr,
+    here,
     readr
 Suggests: 
     knitr,

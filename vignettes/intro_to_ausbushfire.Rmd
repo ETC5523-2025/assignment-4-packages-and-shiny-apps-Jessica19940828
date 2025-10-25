@@ -1,0 +1,52 @@
+---
+title: "Introduction to the ausbushfire Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the ausbushfire Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ausbushfire)
+```
+
+
+This package provides fire weather data regarding the 2019/20 Australian bushfires from the van Oldenborgh et al. (2021) paper. It also includes an interactive Shiny app to explore this data.
+
+## Package Data
+
+The package contains the `ausbushfire_data` dataset. This data includes the Fire Weather Index (FWI) and Monthly Severity Rating (MSR) from 1979-2020.
+
+You can load the package and inspect the data:
+
+```{r setup}
+library(ausbushfire)
+library(dplyr)
+
+# View the first few rows
+head(ausbushfire_data)
+
+# Get a summary of the data
+summary(ausbushfire_data)
+```
+
+## Launching the Shiny App
+
+To explore this data interactively, the package provides the `run_app()` function.
+
+Run the following command in your R Console to launch the Shiny app:
+
+```{r, eval=FALSE}
+# Run this command to start the app
+run_app()
+```
+
+The app allows you to switch between the FWI and MSR metrics and observe the time series, highlighting the extremity of the 2019/20 season.
