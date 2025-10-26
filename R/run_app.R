@@ -4,7 +4,7 @@
 #' \code{ausbushfire} package.
 #'
 #' @export
-#' @importFrom shiny shinyAppDir
+#' @importFrom shiny runApp
 #'
 #' @examples
 #' \dontrun{
@@ -20,5 +20,5 @@ run_app <- function() {
          call. = FALSE)
   }
 
-  shiny::shinyAppDir(app_dir, launch.browser = TRUE)
+  shiny::runApp(app_dir, launch.browser = TRUE)
 }
