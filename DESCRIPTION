@@ -18,6 +18,11 @@ Imports:
     ggplot2,
     dplyr,
     bslib,
+    leaflet,
+    thematic,
+    bsicons,
+    plotly,
+    scales
 Suggests: 
     knitr,
     rmarkdown,
