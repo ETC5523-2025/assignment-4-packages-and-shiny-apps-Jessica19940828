@@ -107,3 +107,4 @@ ausbushfire_data <- all_data %>%
   filter(year >= 1979 & year <= 2019)
 
 usethis::use_data(ausbushfire_data, overwrite = TRUE)
+
