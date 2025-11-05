@@ -191,8 +191,18 @@ ui <- navbarPage(
         ),
         hr(style = "border-top: 1px solid #FFFFFF;"),
         checkboxInput("show_ci_tab2","Show Trend Line (with 95% Confidence Interval)", value = FALSE),
+
         hr(style = "border-top: 1px solid #FFFFFF;"),
+        h5("Interpreting Trends:", style = "color: #FFC400;"),
+        p(
+          "Observe the inter-annual variability and long-term trends for the selected metrics (e.g., FWI or Tmax). If 'Show Trend Line' is checked, the slope of the trend line and the 95% confidence interval (gray area) help determine if the climate risk has significantly increased, decreased, or remained stable over the selected period.",
+          style = "font-size: 0.85rem;"
+        ),
+        hr(style = "border-top: 1px solid #FFFFFF;"),
+        p(tags$small("Click ", tags$a(href="#", onclick = "Shiny.setInputValue('switchTab', 4, {priority: 'event'})", "here for detailed definitions and units"), " of all climate metrics."),
+          style = glue::glue("color: {NAVBAR_FG_COLOR}; opacity: 0.8;"))
       ),
+
       mainPanel(
         width = 9,
         style = "overflow-y: auto; height: 90vh; background-color: #F8F9FA;",
@@ -200,7 +210,7 @@ ui <- navbarPage(
         p("Show the annual changes for selected metrics over the study period."),
         plotOutput("combinedTimeSeriesPlot", height = "450px"),
         hr(style = "border-top: 2px solid #DDDDDD; margin: 2rem 0;"),
-        h4("Key Data (Selected Year)", style = "margin-bottom: 0.5rem;"),
+        h4("", style = "margin-bottom: 0.5rem;"),
         uiOutput("dynamic_value_boxes")
 
       )
@@ -230,13 +240,20 @@ ui <- navbarPage(
         hr(style = "border-top: 1px solid #FFFFFF;"),
 
         checkboxInput("show_ci_tab3","Show Trend Line (with 95% Confidence Interval)", value = FALSE),
-        p(tags$small("Note: Correlation is calculated based on the year range selected in 'Explore Trends' tab."), style = glue::glue("color: {NAVBAR_FG_COLOR}; opacity: 0.6;"))
+        p(tags$small("Note: Correlation is calculated based on the year range selected in 'Explore Trends' tab."), style = glue::glue("color: {NAVBAR_FG_COLOR}; opacity: 0.6;")),
+
+        hr(style = "border-top: 1px solid #FFFFFF;"),
+        h5("Interpreting Correlation:", style = "color: #FFC400;"),
+        p(
+          "Visualize the linear correlation between a selected driver (X-axis) and a chosen outcome (Y-axis). The large red dot highlights the most recent year in the range. The closer the points align to a straight line, the stronger the correlation. An upward-sloping line indicates a positive correlation (e.g., higher temperature leads to greater burned area); a downward slope indicates a negative correlation (e.g., more precipitation leads to less burned area).",
+          style = "font-size: 0.85rem;"
+        )
       ),
       mainPanel(
         width = 9,
         style = "overflow-y: auto; height: 90vh; background-color: #F8F9FA;",
         h4("Relationship Between Metrics: Correlation Analysis", style = "margin-bottom: 0.5rem;"),
-        p("Visualize the linear correlation between a selected driver (X-axis) and a chosen outcome (Y-axis). The large red dot highlights the most recent year in the range."),
+        p("Visualize the linear correlation between two selected metrics."),
         plotOutput("scatterPlot", height = "700px")
       )
     )

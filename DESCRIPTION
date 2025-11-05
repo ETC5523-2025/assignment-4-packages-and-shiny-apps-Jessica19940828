@@ -22,14 +22,16 @@ Imports:
     thematic,
     bsicons,
     plotly,
-    scales
+    scales,
+    tibble
 Suggests: 
     knitr,
     rmarkdown,
     pkgdown,
     tidyr,
     here,
-    readr
+    readr,
+    kableExtra
 URL: https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828/
 BugReports: https://github.com/ETC5523-2025/assignment-4-packages-and-shiny-apps-Jessica19940828/issues
 Roxygen: list(markdown = TRUE)
