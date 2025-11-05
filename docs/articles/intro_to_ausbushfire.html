@@ -112,17 +112,17 @@ exported function:</p>
 key metrics (FWI, MSR, Tmax, Precip, IOD, SAM, burned area) from
 1979-2020.</li>
 </ul>
-<p>See the full schema in the <a href="">Data dictionary</a> and see
-worked examples of data usage in the <a href="">Functions in
+<p>See the full schema in the <a href="articles/data_dictionary.html">Data dictionary</a> and see worked
+examples of data usage in the <a href="articles/intro_to_ausbushfire.html">Introduction to
 ausbushfire</a></p>
 <p>You can load the package and inspect the data:</p>
 </div>
 <div class="section level2">
 <h2 id="app-tour-interpreting-outputs">App Tour: Interpreting Outputs<a class="anchor" aria-label="anchor" href="#app-tour-interpreting-outputs"></a>
 </h2>
-<ul>
-<li>Fire Risk Map</li>
-</ul>
+<div class="section level4">
+<h4 id="fire-risk-map">Fire Risk Map<a class="anchor" aria-label="anchor" href="#fire-risk-map"></a>
+</h4>
 <p>Select Year with slider to show map opacity based on burned area, and
 update the fire risk (FWI) and actual impact (Burned Area) relative to
 the long-term historical context.</p>
@@ -189,20 +189,18 @@ value. Higher opacity/intensity means a more devastating fire season.
 </tr>
 </tbody>
 </table>
-<ul>
-<li>Explore Trends</li>
-</ul>
-<p>Filter Year Range and Metrics to see the correlation and volatility
-of climate metrics over time.</p>
-<ul>
-<li>Time Series Comparison: Long-Term Trends
+</div>
+<div class="section level4">
+<h4 id="explore-trends">Explore Trends<a class="anchor" aria-label="anchor" href="#explore-trends"></a>
+</h4>
+<p>Filter Year Range and Metrics to see the volatility of climate
+metrics over time.</p>
 <div class="figure" style="text-align: center">
 <img src="figures/time_series.png" alt="Line chart of selected metrics with confidence intervals." width="80%" class="img-frame"><p class="caption">
-Example - Time Series: standardized metrics over time with trend line.
+Example: Time Series shows standardized metrics over time with trend
+line.
 </p>
 </div>
-</li>
-</ul>
 <table class="table table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -247,15 +245,17 @@ extreme events has increased due to long-term climate change.
 </tr>
 </tbody>
 </table>
-<ul>
-<li>Relationship Between Metrics: Correlation Analysis
+</div>
+<div class="section level4">
+<h4 id="correlation-analysis">Correlation Analysis<a class="anchor" aria-label="anchor" href="#correlation-analysis"></a>
+</h4>
+<p>Select two metrics to see the correlation over time.</p>
 <div class="figure" style="text-align: center">
 <img src="figures/relationship.png" alt="Scatter plot of selected metrics" width="80%" class="img-frame"><p class="caption">
-Example - Relationship Between Metrics: .
+Example: Scatter plot showing correlation between selected fire metrics
+(FWI, Tmax, IOD, SAM).
 </p>
 </div>
-</li>
-</ul>
 <table class="table table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -299,24 +299,11 @@ general trend, it suggests a particularly severe anomaly.
 </tbody>
 </table>
 </div>
+</div>
 <div class="section level2">
 <h2 id="sources">Sources<a class="anchor" aria-label="anchor" href="#sources"></a>
 </h2>
 <p>van Oldenborgh et al. (2021) article: <a href="https://nhess.copernicus.org/articles/21/941/2021/" class="external-link uri">https://nhess.copernicus.org/articles/21/941/2021/</a></p>
-</div>
-<div class="section level2">
-<h2 id="package-structure">Package Structure<a class="anchor" aria-label="anchor" href="#package-structure"></a>
-</h2>
-<p>assignment-4-packages-and-shiny-apps-Jessica19940828/ ├──
-ausbushfire.Rproj ├── data │ └── ausbushfire_data.rda ├── data-raw │ ├──
-area_data.txt │ ├── fwi_data.txt │ ├── iod_data.txt │ ├── msr_data.txt │
-├── precip_data.txt │ ├── process_data.R │ ├── sam_data.txt │ └──
-tmax_data.txt ├── DESCRIPTION ├── inst │ └── app │ └── app.R ├── LICENSE
-├── LICENSE.md ├── man │ ├── ausbushfire-package.Rd │ ├──
-ausbushfire_data.Rd │ └── run_app.Rd ├── NAMESPACE ├── R │ ├──
-ausbushfire-package.R │ ├── data.R │ └── run_app.R ├── README.md ├──
-README.Rmd └── vignettes ├── data_dictionary.Rmd └──
-intro_to_ausbushfire.Rmd</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

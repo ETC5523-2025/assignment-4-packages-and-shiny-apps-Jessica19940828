@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, echo = FALSE}
+```{r setup, echo = FALSE, message = FALSE, warning=FALSE}
 library(ausbushfire)
 library(dplyr)
 library(knitr)
