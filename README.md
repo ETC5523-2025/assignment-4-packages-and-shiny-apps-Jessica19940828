@@ -12,24 +12,9 @@ indices and major climate drivers, allowing users to investigate the
 increasing risk attributed to changing climate conditions, including the
 context of the devastating 2019–2020 ‘Black Summer’ fires.
 
-The package ships a small, tidy dataset (`ausbushfire_data`) and a Shiny
-application to provide an interactive interface for data exploration and
+The package ships a  **tidy dataset (`ausbushfire_data`)** and a **Shiny
+application** to provide an interactive interface for data exploration and
 trend analysis.
-
-#### Key Features
-
-- **Risk Map (Tab 1)**: Visualizes the defined study region in
-  Southeastern Australia and dynamically highlights the annual burned
-  area intensity ($\text{km}^2$) from 1997 onwards.
-
-- **Trend Analysis (Tab 2)**: Enables interactive comparison of
-  standardized metrics over time and exploration of relationships
-  between different fire risk indicators.
-
-- **Climate Drivers**: Focuses on key factors like the Fire Weather
-  Index (FWI), Monthly Severity Rating (MSR), temperature (Tmax),
-  precipitation, Indian Ocean Dipole (IOD), and Southern Annular Mode
-  (SAM).
 
 ## Installation
 
@@ -41,6 +26,19 @@ You can install the development version of `ausbushfire` directly from
 install.packages("remotes") 
 
 remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-Jessica19940828")
+```
+#### Load the package and Launch the App
+You can launch the application directly after installation with the
+exported function:
+
+``` r
+library(ausbushfire)
+
+# Load dataset
+data(ausbushfire_data)
+
+# Launch the Shiny app
+ausbushfire::run_app()
 ```
 
 ## Dataset Description
@@ -62,17 +60,7 @@ bundled in the `ausbushfire_data` object.
 ## Shiny Application
 
 The package includes a comprehensive Shiny app (located under inst/app/)
-to interactively visualize the data and findings.
-
-**Launch the App**
-
-You can launch the application directly after installation with the
-exported function:
-
-``` r
-library(ausbushfire)
-ausbushfire::run_app()
-```
+to allows users to explore trends, correlations, and risk maps interactively.
 
 #### App Features
 
@@ -80,7 +68,7 @@ ausbushfire::run_app()
   fire risk status (FWI/Burned Area) for Southeastern Australia. The
   color intensity of the study region reflects the severity of the fire
   season.
-
+  
 - **Explore Trends**: Select multiple standardized metrics (FWI, Tmax,
   IOD, Area Burned, etc.) to visualize their long-term trends and
   volatility over a customizable time range.
@@ -89,13 +77,21 @@ ausbushfire::run_app()
   assess the correlation between any two climate drivers or fire impact
   metrics (e.g., Tmax vs Area Burned).
 
-## Documentation
+- **About**: Contains a study region description, dataset download, and session information.
 
-For detailed information on functions, data objects, and vignettes,
-please refer to the full documentation website:
+#### App Screenshot
+Here's a preview of the ausbushfire Shiny app interface:
+![](vignettes/figures/risk_map.png)
+![](vignettes/figures/time_series.png)
 
-- **Site Home**:
-  <https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828>
+## Documentation & Pkgdown Site
+
+- View functions, vignettes, and data dictionary:
+  **Site Home**: <https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828>
+
+- Vignettes included:
+  - Introduction to the ausbushfire package and Shiny app
+  - Data dictionary with variable definitions and units
 
 ## Sources & Citation
 
@@ -106,8 +102,7 @@ Oldenborgh, G. J. van, Krikken, F., Lewis, S., et al. (2021).
 Attribution of the Australian bushfire risk to anthropogenic climate
 change. *Nat. Hazards Earth Syst. Sci., 21, 941–960.*
 
-All data is derived from the KNMI Climate Explorer and corresponding
-literature sources.
+All climate and fire data derived from KNMI Climate Explorer and related literature.
 
 ## License
 
@@ -119,4 +114,4 @@ Heng-Hsieh Chang
 
 ## Contributing
 
-Issues and pull requests are welcome.
+Issues and pull requests are welcome. Please open issues on the GitHub repository for bug reports or suggestions.
