@@ -1,0 +1,80 @@
+---
+title: "Data Dictionary for ausbushfire"
+author: "Heng-Hsieh Chang"
+date: "2025-10-28"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Dictionary for ausbushfire}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE}
+library(ausbushfire)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(tibble)
+```
+
+## Overview
+The ausbushfire_data object is a primary dataset derived from the KNMI Climate Explorer and related literature, compiled to facilitate the interactive analysis of fire risk and climate drivers in Southeastern Australia (1979–2019).
+
+## Dataset
+
+#### Data Structure
+The dataset contains annual observations for key fire weather metrics and climate teleconnections.
+
+```{r}
+# Display the structure of the dataset
+dplyr::glimpse(ausbushfire_data)
+```
+
+#### Variable Definitions
+
+This dataset uses the following variables, primarily representing annual maximum or seasonal means/totals across the study region.
+
+```{r}
+#| echo: false
+table_data <- tibble::tribble(
+  ~Variable, ~Units, ~Period, ~Description,
+  "year", "-", "1979–2019", "Fire season year (aligned to the end of the season).",
+  "fwi_sm", "-", "1979–2019", "Fire Weather Index (FWI) seasonal maximum. Primary measure of overall fire risk.",
+  "msr_sm", "-", "1979–2019", "Monthly Severity Rating (MSR) seasonal maximum. **Reflects risk of prolonged, difficult-to-suppress fires.",
+  "tmax", "°C", "1979–2019", "Maximum Temperature ($\\text{Tmax}$) annual mean for the fire season, a key driver of fuel dryness.",
+  "precip_total", "mm", "1979–2019", "Total Precipitation during the fire season (Sep–Feb). Indicates seasonal drought conditions.",
+  "iod_mean", "-", "1979–2019", "Indian Ocean Dipole (IOD) mean index (Sep–Dec). Major climate driver influencing regional drought.",
+  "sam_mean", "-", "1979–2019", "Southern Annular Mode (SAM) mean index (Sep–Dec). Influences high-latitude westerly winds and rainfall patterns.",
+  "area_burned", "km²", "1997–2018", "Total burned area in the study region, reflecting actual fire impact. (Data availability starts later.)"
+)
+
+# 輸出表格
+kable(table_data, format = "html", escape = FALSE,
+      col.names = c("Variable", "Units", "Period", "Description"),
+      caption = "Field dictionary for the ausbushfire_data dataset") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed")) %>%
+  column_spec(1, bold = TRUE, width = "8em") %>%
+  column_spec(2, width = "5em") %>%
+  column_spec(3, width = "8em") %>%
+  column_spec(4, width = "40em")
+```
+
+#### Quick Peek
+
+A look at the first few records:
+
+```{r}
+head(ausbushfire_data)
+```
+
+#### Notes:
+
+- Data starts from 1979, but area_burned from 1997.
+- Intended uses: time series trends, scatter plots for relationships, map opacity for burned area.

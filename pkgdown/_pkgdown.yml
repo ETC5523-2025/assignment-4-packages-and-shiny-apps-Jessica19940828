@@ -1,0 +1,56 @@
+url: https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828
+
+destination: docs
+
+template:
+  bootstrap: 5
+  bootswatch: litera
+  bslib:
+    primary: "#283618"
+    bg: "#fafaf7"
+    fg: "#283618"
+  assets:
+    css:
+      - extra.css
+
+home:
+  title: "ausbushfire: Australian Bushfire Explorer"
+  description: >
+    An R package with an interactive Shiny app and tidy dataset to explore the
+    bushfire risk in southeastern Australia. Compare FWI, MSR, Tmax, Precip, IOD, SAM, and burned area; view trends and relationships.
+
+navbar:
+  structure:
+    left: [reference, introduction, data-dictionary]
+    right: [search, github]
+  components:
+    reference:
+      text: "Reference"
+      href: reference/index.html
+
+    introduction:
+      text: "Introduction"
+      href: articles/intro_to_ausbushfire.html
+
+    data-dictionary:
+      text: "Data Dictionary"
+      href: articles/data_dictionary.html
+
+    github:
+      icon: fab fa-github
+      href: https://github.com/Jessica19940828
+      aria-label: "GitHub repository"
+
+reference:
+  - title: "Launch the app"
+    contents:
+      - starts_with("run_app")
+  - title: "Data"
+    contents:
+      - ausbushfire_data
+
+articles:
+  - title: "Examples"
+    contents:
+      - intro_to_ausbushfire
+      - data_dictionary

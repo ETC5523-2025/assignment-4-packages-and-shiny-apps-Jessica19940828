@@ -63,11 +63,11 @@ if (is.infinite(min_area) || is.infinite(max_area) || min_area == max_area) {
   min_area <- 0; max_area <- 1
 }
 
-#  5. 定義圖例級距
+#  5. Define legend level
 area_bins <- c(0, 1000, 5000, 10000, max_area + 1)
 area_pal <- colorBin("Reds", domain = c(0, max_area), bins = area_bins)
 
-# 6. 定義指標名稱和顏色映射
+# 6. Define metrics name and colour
 metric_names_map <- c(
   fwi_sm = "FWI (Overall Fire Risk)",
   msr_sm = "MSR (Prolonged Fire Risk)",
@@ -79,71 +79,74 @@ metric_names_map <- c(
 )
 
 metric_colors <- c(
-  fwi_sm = "#B71C1C", # Primary Red
-  msr_sm = "#FF9800", # Danger Orange
-  tmax = "#FFEB3B",   # Yellow Heat
-  precip_total = "#2196F3", # Blue Water
-  iod_mean = "#4CAF50",     # Green
-  sam_mean = "#673AB7",     # Deep Purple
-  area_burned = "#E53935"   # Brighter Red
+  fwi_sm = "#EE3B3B",
+  msr_sm = "#FF7F24",
+  tmax = "#EEAD0E",
+  precip_total = "#59B8D8",
+  iod_mean = "#60B68C",
+  sam_mean = "#A48EE0",
+  area_burned = "#8B3A62"
 )
+
+NAVBAR_BG_COLOR <- "#004D60"
+NAVBAR_FG_COLOR <- "#FFFFFF"
+SIDEBAR_BG_COLOR <- "#004D60"
 
 # -------------------------------------------------
 #  UI
 # -------------------------------------------------
 ui <- navbarPage(
   title = "Australian Bushfire Risk Explorer",
+  header = tagList(withMathJax()),
   theme = bslib::bs_theme(
-    bootswatch = "litera", # 選擇一個乾淨、現代的淺色基礎風格
-    primary = "#B71C1C",  # 火災紅作為主要警告色
-    secondary = "#495057", # 次要色用於中性背景
-    danger = "#FF9800",   # 警示色改為橘色
+    bootswatch = "litera",
+    primary = "#B71C1C",
+    secondary = "#495057",
+    danger = "#FF9800",
     base_font = font_google("Inter"),
-    fg = "#333333",       # 前景文字色
-    bg = "#F8F9FA",       # 背景色設為極淺灰
-    navbar_bg = "#343a40",    # 深炭灰背景
-    navbar_fg = "#FFFFFF",
-    # 實現分頁設計感
-    navbar_active_link_bg = "transparent", # 點擊時背景透明
-    navbar_active_link_color = "#FFFFFF",  # 點擊時文字保持白色
-    # 使用 custom CSS 變數創建底線效果
-    `navbar-link-padding-y` = "1rem",
-    `navbar-padding-y` = "0rem",
-    `navbar-link-active-border-bottom` = paste0("3px solid var(--bs-primary)"),
+    fg = "#333333",
+    bg = "#F8F9FA",
+    navbar_bg = NAVBAR_BG_COLOR,
+    navbar_fg = NAVBAR_FG_COLOR,
+    `navbar-padding-y` = "1rem",
+    `navbar-link-padding-y` = "0.75rem",
+    `navbar-link-padding-x` = "3rem",
+    navbar_active_link_bg = "transparent",
+    navbar_active_link_color = NAVBAR_FG_COLOR,
+    `navbar-link-active-border-bottom` = paste0("3px solid #FFC400"),
     `navbar-link-hover-color` = "rgba(255, 255, 255, 0.75)"
   ),
 
   # ---------- Tab 1 ----------
   tabPanel(
-    "Risk Map",
+    title = span(bsicons::bs_icon("fire"), "Fire Risk Map"),
     fillPage(
       padding = c(10,10,10,10),
       absolutePanel(
-        top = "30vh", left = 10, width = 300,
+        top = "30vh", left = 10, width = 350,
         style = "
           background: #FFFFFF;
           padding: 15px;
           border: 1px solid #dee2e6;
           border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 柔和陰影 */
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
           z-index: 1000;
-          color: #333333; /* 確保淺色背景下文字是深色 */
+          color: #333333;
         ",
-        h4("What's Black Summer"),
-        p("In 2019-2020, the Black Summer bushfires burned over 18 million hectares in southeastern Australia,
-          with climate change increasing the risk by at least 30%."),
-        p("This app explores fire weather trends and climate drivers from 1979-2019."),
+        h4("The Black Summer"),
+        p("The 2019-2020 Black Summer bushfires burned over 18 million hectares— one of the most devastating fire seasons on record. Climate change has increased fire risk by nearly 30%, intensifying both frequency and severity."),
+        p("Use this explorer to understand how such extreme events fit into broader trends from 1979–2019."),
       ),
-      h4("Research Area: Southeastern Australia Fire Risk"),
-      p("Map shows the study region. Red intensity represents burned area (from 1997)."),
-      leafletOutput("studyMapInteractive", height = "70vh"),
+      h4("Southeastern Australia Fire Risk Trends"),
+      p("Explore the dynamic map to visualize historical bushfire risks across southeastern Australia.Use the year slider to view changes in burned area and FWI over time."),
+      leafletOutput("studyMapInteractive", height = "65vh"),
       absolutePanel(
         top = 100, right = 10, width = 350,
         style = "
           background: #FFFFFF;
           padding: 10px 15px;
           border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 柔和陰影 */
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
           color: #333333;
         ",
         h5("Select Year:"),
@@ -160,61 +163,120 @@ ui <- navbarPage(
 
   # ---------- Tab 2 ----------
   tabPanel(
-    "Explore Trends",
+    title = span(bsicons::bs_icon("graph-up"), "Explore Trends"),
     fluid = TRUE,
     sidebarLayout(
       sidebarPanel(
         width = 3,
-        style = "background: #F0F0F0; border-right: 1px solid #DDDDDD; height: 90vh; overflow-y: auto; padding-top: 15px;",
+        style = glue::glue("background-color: {SIDEBAR_BG_COLOR};
+                           border-right: 1px solid {SIDEBAR_BG_COLOR};
+                           overflow-y: auto;
+                           padding-top: 15px;
+                           color: {NAVBAR_FG_COLOR};"),
 
-        h4("Interactive Controls"),
+        h4("Interactive Controls", style = glue::glue("color: {NAVBAR_FG_COLOR}")),
         sliderInput("year_filter_tab2","Select Year Range:",
                     min = 1979, max = 2019,
                     value = c(1979,2019), step = 1, sep = ""),
-        hr(),
+        hr(style = "border-top: 1px solid #FFFFFF;"),
         checkboxGroupInput(
           "selected_metrics",
           "Select Metrics",
           choices = metric_names_map,
-          selected = metric_names_map[c("fwi_sm", "msr_sm", "precip_total")]
+          selected = metric_names_map[c("fwi_sm", "msr_sm")]
         ),
-        hr(),
+        hr(style = "border-top: 1px solid #FFFFFF;"),
         checkboxInput("show_ci_tab2","Show Trend Line (with 95% Confidence Interval)", value = FALSE),
-        hr(),
-        h5(textOutput("highlight_year_text")),
-        uiOutput("dynamic_value_boxes")
+        hr(style = "border-top: 1px solid #FFFFFF;"),
       ),
       mainPanel(
         width = 9,
-        # 確保 mainPanel 內容可以滾動
-        style = "overflow-y: auto; height: 90vh;",
-        h4("Time Series Comparison"),
-        p("This chart shows the selected metrics over time"),
-        plotOutput("combinedTimeSeriesPlot", height = "400px"),
-        hr(),
-        h4("Relationship Between Metrics"),
-        fluidRow(
-          column(6, selectInput("scatter_x","X Axis:", choices = metric_names_map, selected = metric_names_map["fwi_sm"])),
-          column(6, selectInput("scatter_y","Y Axis:", choices = metric_names_map, selected = metric_names_map["area_burned"]))
-        ),
-        plotOutput("scatterPlot", height = "500px")
+        style = "overflow-y: auto; height: 90vh; background-color: #F8F9FA;",
+        h4("Time Series Comparison: Long-Term Trends", style = "margin-bottom: 0.5rem;"),
+        p("Show the annual changes for selected metrics over the study period."),
+        plotOutput("combinedTimeSeriesPlot", height = "450px"),
+        hr(style = "border-top: 2px solid #DDDDDD; margin: 2rem 0;"),
+        h4("Key Data (Selected Year)", style = "margin-bottom: 0.5rem;"),
+        uiOutput("dynamic_value_boxes")
+
       )
     )
   ),
 
   # ---------- Tab 3 ----------
   tabPanel(
-    "About this Site",
-    h4("Why This App?"),
-    p("This app is based on the 2021 paper 'Attribution of the Australian bushfire risk to anthropogenic climate change'..."),
-    hr(),
-    h4("Data"),
-    p("All data from van Oldenborgh et al. (2021) and KNMI Climate Explorer."),
-    downloadButton("downloadData_about","Download Full Data (.csv)"),
-    hr(),
-    h4("Creator"), p("HengHsieh Chang"),
-    hr(),
-    h4("Session Info"), verbatimTextOutput("sessionInfo")
+    title = span(bsicons::bs_icon("graph-up-arrow"), "Correlation Analysis"),
+    fluid = TRUE,
+    sidebarLayout(
+      sidebarPanel(
+        width = 3,
+        style = glue::glue("background-color: {SIDEBAR_BG_COLOR};
+                           border-right: 1px solid {SIDEBAR_BG_COLOR};
+                           overflow-y: auto;
+                           padding-top: 15px;
+                           color: {NAVBAR_FG_COLOR};"),
+
+        h4("Metrics Selection", style = glue::glue("color: {NAVBAR_FG_COLOR}")),
+        p("Analyze the relationship between any two annual metrics over the selected period.", style = glue::glue("color: {NAVBAR_FG_COLOR}; opacity: 0.8;")),
+        hr(style = "border-top: 1px solid #FFFFFF;"),
+
+        selectInput("scatter_x","X Axis (Driver / Index):", choices = metric_names_map, selected = metric_names_map["fwi_sm"]),
+        selectInput("scatter_y","Y Axis (Impact / Outcome):", choices = metric_names_map, selected = metric_names_map["area_burned"]),
+
+        hr(style = "border-top: 1px solid #FFFFFF;"),
+
+        checkboxInput("show_ci_tab3","Show Trend Line (with 95% Confidence Interval)", value = FALSE),
+        p(tags$small("Note: Correlation is calculated based on the year range selected in 'Explore Trends' tab."), style = glue::glue("color: {NAVBAR_FG_COLOR}; opacity: 0.6;"))
+      ),
+      mainPanel(
+        width = 9,
+        style = "overflow-y: auto; height: 90vh; background-color: #F8F9FA;",
+        h4("Relationship Between Metrics: Correlation Analysis", style = "margin-bottom: 0.5rem;"),
+        p("Visualize the linear correlation between a selected driver (X-axis) and a chosen outcome (Y-axis). The large red dot highlights the most recent year in the range."),
+        plotOutput("scatterPlot", height = "700px")
+      )
+    )
+  ),
+
+
+  # ---------- Tab 4 ----------
+  tabPanel(
+    title = span(bsicons::bs_icon("info-circle"), "About"),
+    div(
+      class = "container p-4",
+      style = "height: 90vh; overflow-y: auto; padding-right: 15px;",
+      h3("Project Overview: Australian Bushfire Risk Attribution"),
+      p("This interactive application explores the historical relationship between climate drivers and fire weather risk in Southeastern Australia, covering the period from 1979 to 2019. The analysis is built upon data and methodologies used in climate attribution science, particularly focusing on the role of anthropogenic climate change in increasing fire severity, such as the 2019–2020 Black Summer events."),
+
+      h4("Data and Methodology"),
+      tags$ul(
+        tags$li(
+          strong("Study Region:"),
+          uiOutput("study_region_text")),
+        tags$li(
+          strong("Key Metrics:"),
+          " The application tracks annual maximums of the Fire Weather Index (FWI) and Monthly Severity Rating (MSR), alongside major climate drivers including Maximum Temperature (Tmax), Precipitation, Indian Ocean Dipole (IOD), and Southern Annular Mode (SAM)."),
+        tags$li(
+          strong("Data Source:"),
+          " All data is derived from the",
+          tags$a(href = 'https://climexp.knmi.nl', 'KNMI Climate Explorer'),
+          " and related peer-reviewed literature."),
+        tags$li(
+          strong("Primary Reference:"),
+          "van Oldenborgh, G. J., Krikken, F., Lewis, S., et al. (2021). ",
+          em("Attribution of the Australian bushfire risk to anthropogenic climate change."),
+          " *Natural Hazards and Earth System Sciences*, 21, 941–960.")
+      ),
+
+      h4("Technical Information"),
+      p("You can download the full processed dataset used in this analysis:"),
+      downloadButton("downloadData_about","Download Full Data (.csv)"),
+      hr(),
+      h5("Session Details"), verbatimTextOutput("sessionInfo"),
+      hr(),
+      p("Developed by ", strong("Heng-Hsieh Chang"), ". ",
+        "For questions or collaboration inquiries, please contact the project author.")
+    )
   )
 )
 
@@ -223,7 +285,11 @@ ui <- navbarPage(
 # -------------------------------------------------
 server <- function(input, output, session) {
 
-  thematic::thematic_shiny(font = "auto")
+  thematic::thematic_shiny(
+    font = "auto",
+    bg = "transparent",
+    fg = "#333333"
+  )
 
   # ----- Global setting -----
   theme_app <- function() {
@@ -232,7 +298,10 @@ server <- function(input, output, session) {
         plot.title = element_text(face = "bold", size = 16, hjust = 0),
         panel.grid.minor = element_blank(),
         panel.grid.major = element_line(linewidth = 0.3, color = "grey85"),
-        legend.position = "bottom", legend.title = element_blank()
+        legend.position = "bottom", legend.title = element_blank(),
+        plot.background = element_rect(fill = "transparent", colour = NA),
+        panel.background = element_rect(fill = "transparent", colour = NA),
+        axis.text.x = element_text(size = 12)
       )
   }
   highlight_color <- "#B71C1C" # Primary Red
@@ -284,11 +353,10 @@ server <- function(input, output, session) {
     area_val <- d$area_burned
     popup_txt <- glue(
       "<b>Southeastern Australia ({d$year})</b><br>",
-      "FWI: {round(d$fwi_sm, 1)}<br>",
+      "FWI: {round(d$fwi_sm, 1)}(Fire Risk)<br>",
       "Burned Area: {ifelse(d$year < 1997 || is.na(area_val), 'N/A', comma(round(area_val, 0)))} km²"
     )
 
-    #  添加動態多邊形
     fill_color <- if (d$year >= 1997 && !is.na(area_val)) area_pal(area_val) else "#CCCCCC"
 
     opacity <- 0.1
@@ -308,10 +376,10 @@ server <- function(input, output, session) {
       addPolygons(
         data = study_region_sf,
         fillColor = fill_color,
-        color = "#B71C1C", # 邊框顏色
+        color = "#B71C1C",
         weight = 3,
         fillOpacity = opacity,
-        layerId = "dynamic_region", # 使用特定的 Layer ID 以便更新
+        layerId = "dynamic_region",
         label = "Southeastern Australia Study Region"
       )
 
@@ -327,11 +395,11 @@ server <- function(input, output, session) {
     theme_status <- if(d$fwi_sm > averages$avg_fwi_sm) "primary" else "danger"
 
     bslib::value_box(
-      title = paste(d$year,"FWI"),
+      title = paste(d$year,"FWI (Fire Weather Index)"),
       value = round(d$fwi_sm,1),
       p(paste("Long-term Average:",round(averages$avg_fwi_sm,1)), style = "font-size: 20px;"),
       theme = theme_status,
-      height = "150px"
+      height = "140px"
     )
   })
 
@@ -341,22 +409,17 @@ server <- function(input, output, session) {
       return(bslib::value_box(title = paste(d$year,"Burned Area"), value = "N/A",
                               p("Data starts from 1997", style = "font-size: 20px;"),
                               theme = "secondary",
-                              height = "150px"))
+                              height = "140px"))
     bslib::value_box(
       title = paste(d$year,"Burned Area (km²)"),
       value = scales::comma(round(d$area_burned,0)),
       p(paste("Long-term Average:",scales::comma(round(averages$avg_area_burned,0))), style = "font-size: 20px;"),
       theme = "secondary",
-      height = "150px"
+      height = "140px"
     )
   })
 
   # ---------- Tab 2 ----------
-  output$highlight_year_text <- renderText({
-    req(input$year_filter_tab2)
-    current_year <- input$year_filter_tab2[2]
-    paste("Key Data (", current_year, "Year):")
-  })
 
   output$dynamic_value_boxes <- renderUI({
     req(input$selected_metrics, input$year_filter_tab2)
@@ -393,11 +456,21 @@ server <- function(input, output, session) {
         fill = TRUE,
         class = "text-white",
         style = glue::glue("background-color: {color_code}; border-color: {color_code};"),
-        height = "130px"
+        height = "130px",
+        width = NULL
       )
     })
-    tagList(boxes)
+
+    fluidRow(
+      lapply(boxes, function(box) {
+        column(
+          width = floor(12 / max(length(boxes), 1)),  # 平均分配橫向空間
+          box
+        )
+      })
+    )
   })
+
 
   # ----- Time Series plot -----
   output$combinedTimeSeriesPlot <- renderPlot({
@@ -440,7 +513,6 @@ server <- function(input, output, session) {
                            se = TRUE, linetype = "dashed", linewidth = 0.5, na.rm = TRUE, show.legend = FALSE)
       }
       else {
-        # 如果數據點不足，印出警告訊息到 R Console
         cat("Warning: Not enough data points to compute smooth line for selected year range.\n")
       }
     }
@@ -451,6 +523,8 @@ server <- function(input, output, session) {
   output$scatterPlot <- renderPlot({
     req(input$scatter_x, input$scatter_y)
 
+    show_ci <- input$show_ci_tab3
+
     scatter_x_col <- names(metric_names_map)[metric_names_map == input$scatter_x]
     scatter_y_col <- names(metric_names_map)[metric_names_map == input$scatter_y]
 
@@ -459,7 +533,6 @@ server <- function(input, output, session) {
     filtered <- ausbushfire_data %>%
       filter(year >= input$year_filter_tab2[1],
              year <= input$year_filter_tab2[2]) %>%
-      # 高亮年份設定為 Tab 2 的上限年份 (Q3)
       mutate(highlight = ifelse(year == input$year_filter_tab2[2],
                                 "Highlighted Year", "Other Years"))%>%
       filter(!is.na(.data[[scatter_x_col]]), !is.na(.data[[scatter_y_col]]))
@@ -475,16 +548,27 @@ server <- function(input, output, session) {
                  alpha = 0.5, size = base_size, colour = base_color) +
       geom_point(data = filter(filtered, highlight == "Highlighted Year"),
                  alpha = 0.9, size = highlight_size, colour = highlight_color_scatter) +
-      geom_smooth(method = "lm", se = input$show_ci_tab2,
-                  colour = "black", linetype = "dashed") +
+      geom_smooth(method = "lm", se = show_ci,
+                  colour = highlight_color, linetype = "dashed") +
       labs(title = paste(input$scatter_y, "vs", input$scatter_x),
            x = input$scatter_x, y = input$scatter_y) +
-      theme_app()
+      theme_app() +
+      theme(
+        plot.title = element_text(size = 22),
+        axis.title = element_text(size = 18, face = "bold"),
+        axis.text = element_text(size = 14)
+      )
     p
   })
 
+  # ---------- Tab 4 ----------
+  output$study_region_text <- renderUI({
+    tags$span(" The analysis focuses on a key fire-prone region of Southeastern Australia, defined by the polygon ",
+              tags$b("29°S, 155°E; 29°S, 150°E; 40°S, 144°E; 40°S, 155°E"),
+              "."
+     )
+  })
 
-  # ---------- Tab 3 ----------
   output$downloadData_about <- downloadHandler(
     filename = function() { paste0("ausbushfire_data_", Sys.Date(), ".csv") },
     content  = function(file) { write.csv(ausbushfire_data, file, row.names = FALSE) }

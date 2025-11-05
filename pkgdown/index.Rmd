@@ -1,0 +1,45 @@
+---
+title: "index"
+output: html_document
+---
+
+# ausbushfire
+
+## Overview
+
+The `ausbushfire` R package provides an interactive interface to explore key fire weather indices and climate drivers in Southeastern Australia from **1979 to 2019**, analyzing trends related to the Black Summer bushfires. The numbers are based on the published van Oldenborgh et al. (2021) workflow and let you:
+
+- Browse fire weather index (FWI) and burned area on a map (with slider for year),
+- Explore trends in metrics like FWI, MSR, Tmax, Precip, IOD, SAM, Area Burned (with filters),
+- View relationships between metrics in scatter plots.
+
+
+## Installation
+You can install the development version of ausbushfire from [GitHub](https://github.com/) with:
+
+```{r, eval=FALSE}
+# Install remotes if needed
+install.packages("remotes") 
+
+remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-Jessica19940828")
+
+```
+
+## Learn More
+
+See the **Examples** → [Introduction to ausbushfire](articles/intro_to_ausbushfire.html)  
+and the **Data Dictionary** → [Data Dictionary](articles/data_dictionary.html).
+
+You can also launch the Shiny app directly with:
+
+```{r}
+ausbushfire::run_app()
+```
+
+
+## Sources & citation
+
+van Oldenborgh et al. (2021) article: <https://nhess.copernicus.org/articles/21/941/2021/>
+
+## Contributing
+Issues and pull requests are welcome.

@@ -1,0 +1,42 @@
+/* extra.css */
+/* Navbar */
+.navbar {
+  background-color: #B71C1C !important;
+}
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .navbar-text {
+  color: #fafaf7 !important;
+}
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover { opacity: 0.9; }
+
+
+/* Title banner */
+.page-header {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 0;
+  display: block !important;
+}
+.page-header .title,
+.page-header h1,
+.page-header .lead {
+  color: #B71C1C !important;
+}
+.navbar .text-muted,
+.navbar .nav-text,
+.navbar small.nav-text,
+.navbar small.nav-text.text-muted {
+  color: #fafaf7 !important;
+}
+
+
+/* Body text */
+body { background-color: #fafaf7; }
+h1, h2, h3, h4 {
+  color: #B71C1C;
+  font-family: "Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  font-weight: 600;
+}
