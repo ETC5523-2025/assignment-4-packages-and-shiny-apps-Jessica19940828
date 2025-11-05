@@ -55,7 +55,7 @@ table_data <- tibble::tribble(
   "area_burned", "km²", "1997–2018", "Total burned area in the study region, reflecting actual fire impact. (Data availability starts later.)"
 )
 
-# 輸出表格
+
 kable(table_data, format = "html", escape = FALSE,
       col.names = c("Variable", "Units", "Period", "Description"),
       caption = "Field dictionary for the ausbushfire_data dataset") %>%

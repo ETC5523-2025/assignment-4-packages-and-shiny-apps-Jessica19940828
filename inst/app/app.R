@@ -15,9 +15,13 @@ library(sf)
 
 # ---------- Load in data ----------
 if (interactive()) {
-  devtools::load_all(".")
-} else {
-  data(ausbushfire_data, package = "ausbushfire")
+  if (requireNamespace("devtools", quietly = TRUE)) {
+    devtools::load_all(".")
+  }
+}
+
+if (!exists("ausbushfire_data", envir = globalenv())) {
+  data("ausbushfire_data", package = "ausbushfire", envir = globalenv())
 }
 
 # ---------- Outside of server ----------
@@ -272,6 +276,10 @@ ui <- navbarPage(
       p("You can download the full processed dataset used in this analysis:"),
       downloadButton("downloadData_about","Download Full Data (.csv)"),
       hr(),
+      h4("Field Descriptions"),
+      p("The following table describes each field included in the dataset used by this application."),
+      tableOutput("field_description"),
+      hr(),
       h5("Session Details"), verbatimTextOutput("sessionInfo"),
       hr(),
       p("Developed by ", strong("Heng-Hsieh Chang"), ". ",
@@ -464,7 +472,7 @@ server <- function(input, output, session) {
     fluidRow(
       lapply(boxes, function(box) {
         column(
-          width = floor(12 / max(length(boxes), 1)),  # 平均分配橫向空間
+          width = floor(12 / max(length(boxes), 1)),
           box
         )
       })
@@ -561,20 +569,40 @@ server <- function(input, output, session) {
     p
   })
 
-  # ---------- Tab 4 ----------
-  output$study_region_text <- renderUI({
-    tags$span(" The analysis focuses on a key fire-prone region of Southeastern Australia, defined by the polygon ",
-              tags$b("29°S, 155°E; 29°S, 150°E; 40°S, 144°E; 40°S, 155°E"),
-              "."
-     )
-  })
+    # ---------- Tab 4 ----------
+    output$study_region_text <- renderUI({
+      tags$span(" The analysis focuses on a key fire-prone region of Southeastern Australia, defined by the polygon ",
+                tags$b("29°S, 155°E; 29°S, 150°E; 40°S, 144°E; 40°S, 155°E"),
+                "."
+       )
+    })
 
-  output$downloadData_about <- downloadHandler(
-    filename = function() { paste0("ausbushfire_data_", Sys.Date(), ".csv") },
-    content  = function(file) { write.csv(ausbushfire_data, file, row.names = FALSE) }
-  )
-  output$sessionInfo <- renderPrint({ sessionInfo() })
-}
+    output$downloadData_about <- downloadHandler(
+      filename = function() { paste0("ausbushfire_data_", Sys.Date(), ".csv") },
+      content  = function(file) { write.csv(ausbushfire_data, file, row.names = FALSE) }
+    )
+    output$sessionInfo <- renderPrint({ sessionInfo()
+    })
+
+    output$field_description <- renderTable({
+      data.frame(
+        Field = c("year", "region", "fwi_sm", "msr_sm", "tmax", "precip_total",
+                  "iod_mean", "sam_mean", "area_burned"),
+        Description = c(
+          "Calendar year of observation",
+          "Study region (Southeastern Australia)",
+          "Fire Weather Index (FWI) – indicator of overall fire danger based on weather conditions",
+          "Monthly Severity Rating (MSR) – reflects the potential for long-duration fires",
+          "Mean maximum temperature during the fire season (°C)",
+          "Total precipitation (mm) during the fire season (Sep–Feb)",
+          "Indian Ocean Dipole (IOD) mean index – influences drought and rainfall patterns",
+          "Southern Annular Mode (SAM) mean index – indicates wind and pressure variations affecting climate",
+          "Observed total burned area (km²)"
+        ),
+        stringsAsFactors = FALSE
+      )
+    })
+  }
 
 # -------------------------------------------------
 shinyApp(ui = ui, server = server)
