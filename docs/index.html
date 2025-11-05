@@ -57,16 +57,7 @@
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
 <p><code>ausbushfire</code> is an R package designed to explore the trends and climate drivers associated with the Australian bushfire risk in Southeastern Australia (1979–2019). The analysis is grounded in key meteorological indices and major climate drivers, allowing users to investigate the increasing risk attributed to changing climate conditions, including the context of the devastating 2019–2020 ‘Black Summer’ fires.</p>
-<p>The package ships a small, tidy dataset (<code>ausbushfire_data</code>) and a Shiny application to provide an interactive interface for data exploration and trend analysis.</p>
-<div class="section level4">
-<h4 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
-</h4>
-<ul>
-<li><p><strong>Risk Map (Tab 1)</strong>: Visualizes the defined study region in Southeastern Australia and dynamically highlights the annual burned area intensity (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">km</mtext><mn>2</mn></msup><annotation encoding="application/x-tex">\text{km}^2</annotation></semantics></math>) from 1997 onwards.</p></li>
-<li><p><strong>Trend Analysis (Tab 2)</strong>: Enables interactive comparison of standardized metrics over time and exploration of relationships between different fire risk indicators.</p></li>
-<li><p><strong>Climate Drivers</strong>: Focuses on key factors like the Fire Weather Index (FWI), Monthly Severity Rating (MSR), temperature (Tmax), precipitation, Indian Ocean Dipole (IOD), and Southern Annular Mode (SAM).</p></li>
-</ul>
-</div>
+<p>The package ships a <strong>tidy dataset (<code>ausbushfire_data</code>)</strong> and a <strong>Shiny application</strong> to provide an interactive interface for data exploration and trend analysis.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -77,6 +68,19 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ETC5523-2025/assignment-4-packages-and-shiny-apps-Jessica19940828"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="load-the-package-and-launch-the-app">Load the package and Launch the App<a class="anchor" aria-label="anchor" href="#load-the-package-and-launch-the-app"></a>
+</h4>
+<p>You can launch the application directly after installation with the exported function:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828/" class="external-link">ausbushfire</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ausbushfire_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Launch the Shiny app</span></span>
+<span><span class="fu">ausbushfire</span><span class="fu">::</span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="dataset-description">Dataset Description<a class="anchor" aria-label="anchor" href="#dataset-description"></a>
@@ -150,29 +154,46 @@
 <div class="section level2">
 <h2 id="shiny-application">Shiny Application<a class="anchor" aria-label="anchor" href="#shiny-application"></a>
 </h2>
-<p>The package includes a comprehensive Shiny app (located under inst/app/) to interactively visualize the data and findings.</p>
-<p><strong>Launch the App</strong></p>
-<p>You can launch the application directly after installation with the exported function:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828/" class="external-link">ausbushfire</a></span><span class="op">)</span></span>
-<span><span class="fu">ausbushfire</span><span class="fu">::</span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The package includes a comprehensive Shiny app (located under inst/app/) to allows users to explore trends, correlations, and risk maps interactively.</p>
 <div class="section level4">
-<h4 id="app-features">App Features<a class="anchor" aria-label="anchor" href="#app-features"></a>
+<h4 id="app-features--app-tabs">App Features / App Tabs<a class="anchor" aria-label="anchor" href="#app-features--app-tabs"></a>
 </h4>
 <ul>
-<li><p><strong>Risk Map</strong>: Use the slider to explore the annual burned area and fire risk status (FWI/Burned Area) for Southeastern Australia. The color intensity of the study region reflects the severity of the fire season.</p></li>
-<li><p><strong>Explore Trends</strong>: Select multiple standardized metrics (FWI, Tmax, IOD, Area Burned, etc.) to visualize their long-term trends and volatility over a customizable time range.</p></li>
-<li><p><strong>Relationship Between Metrics</strong>: Use the scatter plot to quickly assess the correlation between any two climate drivers or fire impact metrics (e.g., Tmax vs Area Burned).</p></li>
+<li>
+<p><strong>Risk Map</strong>:</p>
+<p>Use the slider to explore the annual burned area and fire risk status (FWI/Burned Area) for Southeastern Australia. The color intensity of the study region reflects the severity of the fire season.</p>
+</li>
+<li>
+<p><strong>Explore Trends</strong>:</p>
+<p>Collect multiple standardized metrics (FWI, Tmax, IOD, Area Burned, etc.) to visualize their long-term trends and volatility over a customizable time range.</p>
+</li>
+<li>
+<p><strong>Correlation Analysis</strong>:</p>
+<p>Use the scatter plot to assess the correlation between any two climate drivers or fire impact metrics, helping identify drivers of fire risk.</p>
+</li>
+<li><p><strong>About</strong>: Contains a study region description, dataset download, and session information.</p></li>
 </ul>
+</div>
+<div class="section level4">
+<h4 id="app-screenshot">App Screenshot<a class="anchor" aria-label="anchor" href="#app-screenshot"></a>
+</h4>
+<p>Here’s a preview of the ausbushfire Shiny app interface: <img src="articles/figures/risk_map.png"><img src="articles/figures/time_series.png"></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+<h2 id="documentation--pkgdown-site">Documentation &amp; Pkgdown Site<a class="anchor" aria-label="anchor" href="#documentation--pkgdown-site"></a>
 </h2>
-<p>For detailed information on functions, data objects, and vignettes, please refer to the full documentation website:</p>
 <ul>
 <li>
-<strong>Site Home</strong>: <a href="https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828" class="uri">https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828</a>
+<p>View functions, vignettes, and data dictionary:</p>
+<p><strong>Site Home</strong>: <a href="https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828" class="uri">https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828</a></p>
+</li>
+<li>
+<p>Vignettes included:</p>
+<ul>
+<li>Introduction to the ausbushfire package and Shiny app</li>
+<li>Data dictionary with variable definitions and units</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -181,7 +202,7 @@
 </h2>
 <p>This analysis is based on and inspired by the methodology and data discussed in the following attribution study:</p>
 <p>Oldenborgh, G. J. van, Krikken, F., Lewis, S., et al. (2021). Attribution of the Australian bushfire risk to anthropogenic climate change. <em>Nat. Hazards Earth Syst. Sci., 21, 941–960.</em></p>
-<p>All data is derived from the KNMI Climate Explorer and corresponding literature sources.</p>
+<p>All climate and fire data derived from KNMI Climate Explorer and related literature.</p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
@@ -196,7 +217,7 @@
 <div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
 </h2>
-<p>Issues and pull requests are welcome.</p>
+<p>Issues and pull requests are welcome. Please open issues on the GitHub repository for bug reports or suggestions.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
