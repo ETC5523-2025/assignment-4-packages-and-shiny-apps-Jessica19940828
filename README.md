@@ -62,20 +62,26 @@ bundled in the `ausbushfire_data` object.
 The package includes a comprehensive Shiny app (located under inst/app/)
 to allows users to explore trends, correlations, and risk maps interactively.
 
-#### App Features
+#### App Features / App Tabs
 
-- **Risk Map**: Use the slider to explore the annual burned area and
+- **Risk Map**:
+  
+  Use the slider to explore the annual burned area and
   fire risk status (FWI/Burned Area) for Southeastern Australia. The
   color intensity of the study region reflects the severity of the fire
   season.
   
-- **Explore Trends**: Select multiple standardized metrics (FWI, Tmax,
+- **Explore Trends**:
+  
+  Collect multiple standardized metrics (FWI, Tmax,
   IOD, Area Burned, etc.) to visualize their long-term trends and
   volatility over a customizable time range.
 
-- **Relationship Between Metrics**: Use the scatter plot to quickly
+- **Correlation Analysis**:
+  
+  Use the scatter plot to 
   assess the correlation between any two climate drivers or fire impact
-  metrics (e.g., Tmax vs Area Burned).
+  metrics, helping identify drivers of fire risk.
 
 - **About**: Contains a study region description, dataset download, and session information.
 
@@ -87,6 +93,7 @@ Here's a preview of the ausbushfire Shiny app interface:
 ## Documentation & Pkgdown Site
 
 - View functions, vignettes, and data dictionary:
+  
   **Site Home**: <https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-Jessica19940828>
 
 - Vignettes included:
